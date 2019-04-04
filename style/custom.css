@@ -1,0 +1,11 @@
+.my_red{
+    color: red;
+}
+
+.my_blue {
+    color: dodgerblue;
+}
+
+.my_blue_hover:hover {
+    color: darkblue;
+}
