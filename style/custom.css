@@ -9,3 +9,7 @@
 .my_blue_hover:hover {
     color: darkblue;
 }
+
+.cursor_pointer{
+    cursor: pointer;
+}
