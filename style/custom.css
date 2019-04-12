@@ -13,3 +13,10 @@
 .cursor_pointer{
     cursor: pointer;
 }
+input[type=email]::placeholder{
+    font-size: 10px;
+}
+.img_100 {
+    width: 100%;
+    height: auto;
+}

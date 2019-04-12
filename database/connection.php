@@ -15,7 +15,7 @@ class DBconn {
             $db_pass = "ChannelAutism";
 
             $this->pdoconn = new PDO ("mysql:host=$db_host;dbname=$db_name; charset=utf8mb4", $db_user, $db_pass);
-            $this->pdoconn->setAttributes(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdoconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $ex) {
             echo 'CONNECTION ERROR:' . $ex->getMessage();
         }

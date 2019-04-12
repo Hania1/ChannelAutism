@@ -7,7 +7,7 @@ class Data extends DBconn {
     protected $pdo;
 
     public function __construct(){
-        parent :: ___construct ();
+        parent :: __construct ();
         $this->pdo = $this->getPdo();
     }
 
@@ -23,10 +23,35 @@ class Data extends DBconn {
         }
 
     }
+       public function checkIfEmailAddressExists($email){
+        $sql="SELECT * FROM user WHERE email_address = ?";
+        $statement= $this->pdo->prepare($sql);
+        $statement -> execute([$email]);
+        $result = $statement -> fetchAll (PDO :: FETCH_CLASS,"User");
+        if ($result) {
+            return true;
+        }
+        return false;
 
+    }
 
+    public function checkIfDisplayNameExists($display){
+        $sql="SELECT * FROM user WHERE display_name = ?";
+        $statement= $this->pdo->prepare($sql);
+        $statement -> execute([$display]);
+        $result = $statement -> fetchAll (PDO :: FETCH_CLASS,"User");
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
 
-
+    public function getUserByEmail($email) {
+        $sql = "SELECT * FROM user WHERE email_address = ?";
+        $statement = $this ->pdo->prepare($sql);
+        $statement->execute([$email]);
+        return $statement->fetchAll(PDO::FETCH_CLASS, "User");
+    }
 }
 
 

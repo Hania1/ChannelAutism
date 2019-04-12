@@ -48,13 +48,19 @@
                 <li class="nav-item">
                     <a class="nav-link cursor_pointer" href="#"><i class="fas fa-home"></i> Home</a>
                 </li>
+<!--                --><?php //if (isset($_SESSION['id'])): ?>
                 <li class="nav-item">
                     <a class="nav-link cursor_pointer"  data-toggle="modal" data-target="#signupModal"><i class="fas fa-bus-alt"></i> Sign-up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link cursor_pointer " href="#"><i class="fas fa-bus-alt"></i> Login</a>
+                    <a class="nav-link cursor_pointer" data-toggle="modal" data-target="#loginModal"><i class="fas fa-bus-alt"></i> Login</a>
                 </li>
+<!--                --><?php //else: ?>
+                <li class="nav-item">
+                    <a class="nav-link cursor_pointer" href="?code=logout"><i class="fas fa-bus-alt"></i> Logout</a>
+                </li>
+<!--                --><?php //endif; ?>
             </ul>
-
         </div>
     </nav>
+    <h5><?= $error ?></h5>
