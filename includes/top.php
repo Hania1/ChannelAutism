@@ -32,7 +32,6 @@
             <h1 >Channel Autism</h1>
             <h5>Channel for the Awesome!</h5>
         </div>
-
     </div>
 
     <!--Navigation Area>-->
@@ -46,20 +45,26 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
                 <li class="nav-item">
-                    <a class="nav-link cursor_pointer" href="#"><i class="fas fa-home"></i> Home</a>
-                </li>
-<!--                --><?php //if (isset($_SESSION['id'])): ?>
-                <li class="nav-item">
-                    <a class="nav-link cursor_pointer"  data-toggle="modal" data-target="#signupModal"><i class="fas fa-bus-alt"></i> Sign-up</a>
+                    <a class="nav-link cursor_pointer" href="index.php"><i class="fas fa-home"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link cursor_pointer" data-toggle="modal" data-target="#loginModal"><i class="fas fa-bus-alt"></i> Login</a>
+                    <a class="nav-link" href="forum.php">Forum</a>
                 </li>
-<!--                --><?php //else: ?>
-                <li class="nav-item">
-                    <a class="nav-link cursor_pointer" href="?code=logout"><i class="fas fa-bus-alt"></i> Logout</a>
-                </li>
-<!--                --><?php //endif; ?>
+                <?php if (!isset($_SESSION['id'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link cursor_pointer"  data-toggle="modal" data-target="#signupModal"><i class="fas fa-bus-alt"></i> Sign-up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cursor_pointer" data-toggle="modal" data-target="#loginModal"><i class="fas fa-bus-alt"></i> Login</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link cursor_pointer" data-toggle="modal" data-target="#discussionModal"><i class="fas fa-bus-alt"></i> Create Discussion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cursor_pointer" href="?code=logout"><i class="fas fa-bus-alt"></i> Logout</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>

@@ -9,6 +9,6 @@
 
 <?php require_once('includes/modal_signup.php');?>
 <?php require_once ('includes/modal_login.php'); ?>
-
+<?php require_once ('includes/modal_adddiscussion.php'); ?>
 </body>
 </html>
