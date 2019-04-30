@@ -5,6 +5,7 @@ class Topic implements JsonSerializable {
     private $topic_id;
     private $name;
     private $description;
+    private $colour;
 
     public function __get($name) {
         return $this -> $name;

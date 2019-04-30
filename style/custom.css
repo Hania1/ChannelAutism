@@ -1,3 +1,11 @@
+.my_yellow {
+    color: #ffd511;
+}
+
+.my_yellow_background {
+    background-color: #ffd511;
+}
+
 .my_red{
     color: red;
 }
@@ -19,4 +27,9 @@ input[type=email]::placeholder{
 .img_100 {
     width: 100%;
     height: auto;
+}
+
+.anchor_no_style {
+    text-decoration: none !important;
+    color: black !important;
 }
