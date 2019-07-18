@@ -1,4 +1,5 @@
 <?php
+require_once ('database/data.php');
 
 
 class Discussion implements JsonSerializable {
@@ -6,6 +7,12 @@ class Discussion implements JsonSerializable {
     private $name;
     private $content;
     private $created_date;
+    private $comments = [];
+
+    public function __construct() {
+        $db = new Data();
+        $this->comments = $db->getAllCommentsByDiscussionId($this->discussion_id);
+    }
 
     public function __get($name) {
         return $this -> $name;

@@ -130,9 +130,9 @@ class Data extends DBconn {
         $statement->execute([$discussion_id]);
         return $statement->fetchAll(PDO::FETCH_CLASS, "Comment");
     }
-    public function createComment ($content, $user_id, $discussion_id)
-    {
-        $sql = "INSERT INTO comment (content, fk_user_id, fk_discussion_id) VALUES (?,?,?)";
+
+    public function createComment ($content, $user_id, $discussion_id) {
+        $sql = "INSERT INTO comments (content, fk_user_id, fk_discussion_id) VALUES (?, ?, ?)";
         $statement = $this->pdo->prepare($sql);
         $result = $statement->execute([$content, $user_id, $discussion_id]);
         if ($result) {
@@ -140,9 +140,6 @@ class Data extends DBconn {
         } else {
             return false;
         }
-
-
-
     }
 
 }
