@@ -7,12 +7,16 @@ require_once ('model/model_comment.php');
 
 $chats = null;
 unset($chats);
-
-
+$topic = null;
+$db = new Data();
 
 if (isset($_GET['topics'])) {
-    $db = new Data();
     $chats = $db->getAllDiscussionsByTopic($_GET['topics']);
+    $topic = $db->getTopicById($_GET['topics']);
+}
+
+if (isset($_GET['search'])) {
+    $chats = $db->searchDiscussions($_GET['search']);
 }
 
 ?>

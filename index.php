@@ -2,7 +2,7 @@
 <?php require_once ('controller/ctrl_discussion.php'); ?>
 <?php require_once ('includes/top.php');?>
 
-<img src="assets/Bus_Pic.jpg" alt="Number 15 London Bus In Westminster" class="img_100">
+<img src="assets/autism.jpg" alt="Holding hands" class="img_100">
 
 
 <?php require_once ('includes/bottom.php');?>

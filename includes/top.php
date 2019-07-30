@@ -16,14 +16,14 @@
 <div class="container mt-1">
     <div class="row">
         <div class="col-md-6 text-left">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-0" type="search" placeholder="Search">
+            <form class="form-inline my-2 my-lg-0" action="forum.php" method="get">
+                <input class="form-control mr-sm-0" type="search" name="search" placeholder="Search">
                 <button class="btn my_blue_hover my_blue my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
             </form>
 
         </div>
         <div class="col-md-6 text-right">
-            <a href="#"> <i class="fab fa-instagram fa-2x my_blue my_blue_hover"></i></a>
+            <a href="https://www.instagram.com/channelautism/" target="_blank"> <i class="fab fa-instagram fa-2x my_blue my_blue_hover"></i></a>
         </div>
     </div>
     <div class="row">

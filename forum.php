@@ -7,6 +7,19 @@
 
     <?php if (isset($_GET['topics']) && isset($chats)): ?>
     <div class="row">
+        <div class="col-12">
+            <div class="card text-center m-2" style="background-color: <?= $topic[0]->colour ?>">
+                <div class="card-body">
+                    <h5 class="card-title"><?= $topic[0]->name ?></h5>
+                    <p class="card-text"><?= $topic[0]->description ?></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <?php if(isset($chats)): ?>
+    <div class="row">
         <div class="accordion w-100" id="accordionChats">
         <?php foreach ($chats as $c): ?>
             <div class="col-12">
@@ -24,10 +37,10 @@
                             <p><?= $c->content ?></p>
                             <hr>
                             <?php if(isset($_SESSION['id'])): ?>
-                                <button id="commentButton<?= $c->discussion_id ?>" class="btn btn-primary float-right" onclick="toggleForm(<?= $c->discussion_id ?>)">Add Comment</button>
+                                <button id="commentButton<?= $c->discussion_id ?>" class="btn btn-primary" onclick="toggleForm(<?= $c->discussion_id ?>)">Add Comment</button>
                                 <div id="toggleForm<?= $c->discussion_id ?>" style="display: none;">
                                     <form method="post">
-                                        <textarea class="form-control" name="comment"></textarea>
+                                        <textarea class="form-control" name="comment" required></textarea>
                                         <input type="hidden" name="discussion_id" value="<?= $c->discussion_id ?>">
                                         <input type="hidden" name="code" value="add_comment">
                                         <input type="submit" class="btn btn-success" value="Post Comment">
@@ -35,11 +48,29 @@
                                 </div>
                             <?php endif; ?>
 
-                            <ul>
                             <?php foreach ($c->comments as $comm): ?>
-                                <li><?= $comm->content ?></li>
+                                <hr>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <p><small><?= $comm->display_name[0]->display_name ?></small></p>
+                                    <p><small><?= $comm->created_date ?></small></p>
+                                </div>
+                                <div class="col-lg-9">
+                                    <p><?= $comm->content ?></p>
+                                    <button id="replyButton<?= $comm->comments_id ?>" class="btn btn-primary float-right" onclick="toggleReplyForm(<?= $comm->comments_id ?>)">Reply</button>
+                                    <div id="toggleReplyForm<?= $comm->comments_id ?>" style="display: none;">
+                                        <form method="post">
+                                            <textarea class="form-control" name="comment" required></textarea>
+                                            <input type="hidden" name="comment_id" value="<?= $comm->comments_id ?>">
+                                            <input type="hidden" name="code" value="reply_comment">
+                                            <input type="submit" class="btn btn-success" value="Reply">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             <?php endforeach; ?>
-                            </ul>
+
                         </div>
                     </div>
                 </div>
@@ -49,7 +80,7 @@
     </div>
     <?php endif; ?>
 
-    <?php if (isset($topics)): ?>
+    <?php if (isset($topics) && !isset($_GET['topics'])): ?>
     <div class="row">
     <?php foreach ($topics as $t): ?>
         <div class="col-md-4">
@@ -78,6 +109,12 @@
     function toggleForm(id) {
         $('#toggleForm' + id).toggle();
         $('#commentButton' + id).toggle();
+    }
+
+    function toggleReplyForm(id) {
+        console.log(id);
+        $('#toggleReplyForm' + id).toggle();
+        $('#replyButton' + id).toggle();
     }
 </script>
 

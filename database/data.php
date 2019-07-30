@@ -72,6 +72,15 @@ class Data extends DBconn {
        $statement->execute();
        return $statement->fetchAll(PDO::FETCH_CLASS, "Topic");
    }
+
+    public function getTopicById ($topic_id)
+    {
+        $sql = "SELECT * FROM topics WHERE topic_id = ?";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([$topic_id]);
+        return $statement->fetchAll(PDO::FETCH_CLASS, "Topic");
+    }
+
    public function createDiscussion ($name, $content, $id)
    {
        $sql = "INSERT INTO discussion (name, content, fk_user_id) VALUES (?,?,?)";
@@ -131,7 +140,15 @@ class Data extends DBconn {
         return $statement->fetchAll(PDO::FETCH_CLASS, "Comment");
     }
 
-    public function createComment ($content, $user_id, $discussion_id) {
+    public function getUserDisplayNameById($user_id) {
+        $sql = "SELECT display_name FROM user WHERE user_id = ?";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([$user_id]);
+        return $statement->fetchAll(PDO::FETCH_CLASS, "User");
+    }
+
+    public function createComment ($content, $user_id, $discussion_id)
+    {
         $sql = "INSERT INTO comments (content, fk_user_id, fk_discussion_id) VALUES (?, ?, ?)";
         $statement = $this->pdo->prepare($sql);
         $result = $statement->execute([$content, $user_id, $discussion_id]);
@@ -142,6 +159,16 @@ class Data extends DBconn {
         }
     }
 
+    public function searchDiscussions($search) {
+        $sql = "SELECT discussion.discussion_id, discussion.name, discussion.content, discussion.created_date 
+                FROM discussion
+                WHERE discussion.name LIKE ?
+                OR discussion.content LIKE ?";
+        $wild = "%" . $search . "%";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([$wild, $wild]);
+        return $statement->fetchAll(PDO::FETCH_CLASS, "Discussion");
+    }
 }
 
 
