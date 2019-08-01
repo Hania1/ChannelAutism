@@ -65,6 +65,9 @@
                         <a class="nav-link cursor_pointer" href="?code=logout"><i class="fas fa-shapes"></i> Logout</a>
                     </li>
                 <?php endif; ?>
+                <?php if ($_SESSION['isAdmin']): ?>
+                    <p>You are admin</p>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>

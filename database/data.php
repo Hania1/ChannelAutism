@@ -53,6 +53,18 @@ class Data extends DBconn {
         return $statement->fetchAll(PDO::FETCH_CLASS, "User");
     }
 
+    public function isAdmin($user_id) {
+        $sql = "SELECT user_id FROM user WHERE user_id = ? AND user_type = 'admin'";
+        $statement = $this ->pdo->prepare($sql);
+        $statement->execute([$user_id]);
+        $result = $statement->fetchAll();
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function createTopic ($name, $description){
         $sql = "INSERT INTO topics (name, description) VALUES (?,?)";
         $statement= $this->pdo ->prepare($sql);
@@ -134,12 +146,19 @@ class Data extends DBconn {
 
     public function getAllCommentsByDiscussionId ($discussion_id)
     {
-        $sql = "SELECT * FROM comments WHERE fk_discussion_id = ?";
+        $sql = "SELECT * FROM comments WHERE parent_id = -1 AND fk_discussion_id = ?";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([$discussion_id]);
         return $statement->fetchAll(PDO::FETCH_CLASS, "Comment");
     }
 
+    public function getAllRepliesByParentId ($parent)
+    {
+        $sql = "SELECT * FROM comments WHERE parent_id = ?";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([$parent]);
+        return $statement->fetchAll(PDO::FETCH_CLASS, "Comment");
+    }
     public function getUserDisplayNameById($user_id) {
         $sql = "SELECT display_name FROM user WHERE user_id = ?";
         $statement = $this->pdo->prepare($sql);
@@ -147,11 +166,11 @@ class Data extends DBconn {
         return $statement->fetchAll(PDO::FETCH_CLASS, "User");
     }
 
-    public function createComment ($content, $user_id, $discussion_id)
+    public function createComment ($content, $user_id, $discussion_id, $parent_id = -1)
     {
-        $sql = "INSERT INTO comments (content, fk_user_id, fk_discussion_id) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO comments (content, fk_user_id, fk_discussion_id, parent_id) VALUES (?, ?, ?, ?)";
         $statement = $this->pdo->prepare($sql);
-        $result = $statement->execute([$content, $user_id, $discussion_id]);
+        $result = $statement->execute([$content, $user_id, $discussion_id, $parent_id]);
         if ($result) {
             return $this->pdo->lastInsertId();
         } else {

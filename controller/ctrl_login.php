@@ -53,11 +53,15 @@ if (isset($_GET ['code']) && $_GET ['code'] == "logout") {
     unset ($_SESSION ['id']);
     unset ($_SESSION ['display']);
     session_destroy();
-
     $error = "You have successfully logged out";
 }
 
+$_SESSION['isAdmin'] = false;
 
+if (isset($_SESSION['id'])) {
+    $db = new Data ();
+    $_SESSION['isAdmin'] = $db->isAdmin($_SESSION['id']);
+}
 
 
 function encrypt_password ($pw) {

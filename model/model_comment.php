@@ -8,10 +8,15 @@ class Comment implements JsonSerializable {
     private $fk_user_id;
     private $fk_discussion_id;
     private $display_name;
+    private $parent_id;
+    private $replies = [];
 
     public function __construct() {
         $db = new Data();
         $this->display_name = $db->getUserDisplayNameById($this->fk_user_id);
+        if ($this->parent_id == -1) {
+            $this->replies = $db->getAllRepliesByParentId($this->comments_id);
+        }
     }
 
     public function __get($name) {

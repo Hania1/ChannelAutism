@@ -37,6 +37,13 @@
                             <p><?= $c->content ?></p>
                             <hr>
                             <?php if(isset($_SESSION['id'])): ?>
+                                <?php if ($_SESSION['isAdmin']): ?>
+                                    <form method="post" class="float-right">
+                                        <input type="hidden" name="discussion_id" value="<?= $c->discussion_id ?>">
+                                        <input type="hidden" name="code" value="delete_discussion">
+                                        <input type="submit" class="btn btn-danger" value="DELETE DISCUSSION">
+                                    </form>
+                                <?php endif; ?>
                                 <button id="commentButton<?= $c->discussion_id ?>" class="btn btn-primary" onclick="toggleForm(<?= $c->discussion_id ?>)">Add Comment</button>
                                 <div id="toggleForm<?= $c->discussion_id ?>" style="display: none;">
                                     <form method="post">
@@ -47,7 +54,6 @@
                                     </form>
                                 </div>
                             <?php endif; ?>
-
                             <?php foreach ($c->comments as $comm): ?>
                                 <hr>
                             <div class="row">
@@ -57,20 +63,39 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <p><?= $comm->content ?></p>
-                                    <button id="replyButton<?= $comm->comments_id ?>" class="btn btn-primary float-right" onclick="toggleReplyForm(<?= $comm->comments_id ?>)">Reply</button>
-                                    <div id="toggleReplyForm<?= $comm->comments_id ?>" style="display: none;">
-                                        <form method="post">
-                                            <textarea class="form-control" name="comment" required></textarea>
-                                            <input type="hidden" name="comment_id" value="<?= $comm->comments_id ?>">
-                                            <input type="hidden" name="code" value="reply_comment">
-                                            <input type="submit" class="btn btn-success" value="Reply">
-                                        </form>
-                                    </div>
+                                    <?php if(isset($_SESSION['id'])): ?>
+                                        <button id="replyButton<?= $comm->comments_id ?>" class="btn btn-primary float-right" onclick="toggleReplyForm(<?= $comm->comments_id ?>)">Reply</button>
+                                        <div id="toggleReplyForm<?= $comm->comments_id ?>" style="display: none;">
+                                            <form method="post">
+                                                <textarea class="form-control" name="reply" required></textarea>
+                                                <input type="hidden" name="parent_id" value="<?= $comm->comments_id ?>">
+                                                <input type="hidden" name="discussion_id" value="<?= $c->discussion_id ?>">
+                                                <input type="hidden" name="code" value="reply_comment">
+                                                <input type="submit" class="btn btn-success" value="Reply">
+                                            </form>
+                                        </div>
+                                        <?php if ($_SESSION['isAdmin']): ?>
+                                            <form method="post" class="float-right">
+                                                <input type="hidden" name="discussion_id" value="<?= $comm->comment_id ?>">
+                                                <input type="hidden" name="code" value="delete_comment">
+                                                <input type="submit" class="btn btn-danger" value="DELETE COMMENT">
+                                            </form>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 </div>
+                                <?php if (count($comm->replies) > 0) : ?>
+                                    <?php foreach ($comm->replies as $reply): ?>
+                                        <div class="offset-1 col-lg-3 col-11">
+                                            <p><small><?= $reply->display_name[0]->display_name ?></small></p>
+                                            <p><small><?= $reply->created_date ?></small></p>
+                                        </div>
+                                        <div class="offset-1 col-lg-7 col-11">
+                                            <p><?= $reply->content ?></p>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
-
                             <?php endforeach; ?>
-
                         </div>
                     </div>
                 </div>
